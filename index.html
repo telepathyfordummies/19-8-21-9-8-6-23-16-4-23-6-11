@@ -197,6 +197,20 @@ body {
 
 <script>
 
+  let bgStarted = false; // track if music has started
+const bgMusic = document.getElementById('bg-music');
+bgMusic.volume = 0.2; // lower volume
+
+// Start music on first user click anywhere
+document.addEventListener('click', () => {
+  if (!bgStarted) {
+    bgMusic.play().catch(err => {
+      console.log("Background music play blocked:", err);
+    });
+    bgStarted = true;
+  }
+}, { once: true }); // only triggers once
+
   // ======BACKGROUND MUSIC. LEAVING VOLUME NOTES HERE BC U ALWAYS FORGET =====
   const bgMusic = document.getElementById('bg-music');
 bgMusic.volume = 0.2; // 0.0 = silent, 1.0 = full volume
