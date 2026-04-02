@@ -85,13 +85,35 @@ body {
 }
 
 .popup-box {
-  background: #c0c0c0;
+  background: #e0e0e0;
   border: 2px solid #000;
   width: 300px;
-  padding: 20px;
   text-align: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  box-shadow: 4px 4px #808080;
+  position: relative;
+}
+
+.popup-header {
+  background-color: #4a90e2; /* ribbon color */
+  color: white;
+  padding: 5px 10px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #000;
+  border-radius: 4px 4px 0 0;
+}
+
+.popup-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  line-height: 1;
+  padding: 0;
 }
 
 .popup-box p {
@@ -121,6 +143,10 @@ body {
 
 <div id="popup">
   <div class="popup-box">
+    <div class="popup-header">
+      <span>Perfect Match!</span>
+      <button class="popup-close" onclick="closePopup()">×</button>
+    </div>
     <p id="popup-text"></p>
     <button id="go-button" onclick="goToLink()">Go</button>
     <button id="back-button" onclick="closePopup()">Back</button>
