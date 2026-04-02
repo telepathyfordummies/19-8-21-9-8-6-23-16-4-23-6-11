@@ -85,14 +85,15 @@ body {
 }
 
 .popup-box {
+  .popup-box {
   background: #e0e0e0;
-  border: 2px solid #000;
+  border: 2px solid #4a90e2;  /* matches the ribbon like in archive:3 */
   width: 300px;
   text-align: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   position: relative;
 }
-
+  
 .popup-header {
   background-color: #4a90e2; /* ribbon color */
   color: white;
@@ -105,11 +106,10 @@ body {
   border-radius: 4px 4px 0 0;
 }
 
-.popup-close {
   background: transparent;
   border: none;
-  color: white;
-  font-size: 16px;
+  color: black;     
+  font-size: 14px;  /* x size*/
   cursor: pointer;
   font-weight: bold;
   line-height: 1;
@@ -117,17 +117,16 @@ body {
 }
 
 .popup-box p {
-  margin-bottom: 20px;
+  margin: 15px 0; /* more space above and below the text */
 }
 
 .popup-box button {
-  margin: 5px;
+  margin: 10px 5px 15px 5px; /* bottom margin for spacing */
   padding: 5px 12px;
-  background: #e0e0e0;
-  border: 2px solid #000;
+  background: #c0c0c0;
+  border: 1px solid #000;
   cursor: pointer;
   font-weight: bold;
-  box-shadow: 2px 2px #808080;
 }
 </style>
 </head>
