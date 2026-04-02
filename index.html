@@ -328,6 +328,13 @@ function showPopup(msg, button1Text, button2Text) {
 
 function closePopup() {
   document.getElementById("popup").style.display = "none";
+
+  // Flip cards back if it was a story popup
+  if (popupMode === "match" && firstCard && secondCard) {
+    firstCard.classList.remove("flipped");
+    secondCard.classList.remove("flipped");
+  }
+
   reset();
 }
 
