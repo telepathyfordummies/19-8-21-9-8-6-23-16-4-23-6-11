@@ -246,13 +246,13 @@ function checkMatch() {
     popupMode = "match";
     // Delay popup to show the second card flip
     setTimeout(() => {
-      showPopup(matchResults[key].message, "Go", "Back");
+      showPopup(matchResults[key].message, "go!", "back");
     }, 500); // 500ms delay
   } else if (noMatchPopups[t1] || noMatchPopups[t2]) {
     let msg = noMatchPopups[t1] || noMatchPopups[t2];
     popupMode = "nomatch";
     setTimeout(() => {
-      showPopup(msg, "Okay");
+      showPopup(msg, "okay.");
     }, 500); // same delay for consistency
     setTimeout(() => {
       firstCard.classList.remove("flipped");
@@ -279,8 +279,8 @@ function showPopup(msg, button1Text, button2Text) {
   const goBtn = document.getElementById("go-button");
   const backBtn = document.getElementById("back-button");
 
-  goBtn.innerText = button1Text || "Go";
-  backBtn.innerText = button2Text || "Back";
+  goBtn.innerText = button1Text || "go!";
+  backBtn.innerText = button2Text || "back";
 
   if (popupMode === "nomatch") {
     goBtn.style.display = 'none';
