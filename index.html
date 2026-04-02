@@ -303,25 +303,27 @@ function reset() {
 
 // ====== POPUP ======
 function showPopup(msg, button1Text, button2Text) {
-  document.getElementById("popup-text").innerText = msg;
+  const popupBox = document.getElementById("popup");
+  const header = popupBox.querySelector(".popup-header span");
   const goBtn = document.getElementById("go-button");
   const backBtn = document.getElementById("back-button");
 
-  goBtn.innerText = button1Text || "go!";
-  backBtn.innerText = button2Text || "back";
+  document.getElementById("popup-text").innerText = msg;
 
- if (popupMode === "nomatch") {
+  if (popupMode === "nomatch") {
+    header.innerText = "error";             // ribbon shows "Error"
     goBtn.style.display = 'none';
     backBtn.style.display = 'inline-block';
-    backBtn.innerText = button1Text || "okay."; // <-- use button1Text here
+    backBtn.innerText = button1Text || "okay.";
   } else {
+    header.innerText = "perfect match!";    // ribbon shows default
     goBtn.style.display = 'inline-block';
     backBtn.style.display = 'inline-block';
     goBtn.innerText = button1Text || "go!";
     backBtn.innerText = button2Text || "back";
   }
 
-  document.getElementById("popup").style.display = "flex";
+  popupBox.style.display = "flex";
 }
 
 function closePopup() {
