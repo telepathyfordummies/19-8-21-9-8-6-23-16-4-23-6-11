@@ -244,15 +244,20 @@ function checkMatch() {
   if (matchResults[key]) {
     currentLink = matchResults[key].link;
     popupMode = "match";
-    showPopup(matchResults[key].message, "go!", "back");
+    // Delay popup to show the second card flip
+    setTimeout(() => {
+      showPopup(matchResults[key].message, "Go", "Back");
+    }, 500); // 500ms delay
   } else if (noMatchPopups[t1] || noMatchPopups[t2]) {
     let msg = noMatchPopups[t1] || noMatchPopups[t2];
     popupMode = "nomatch";
-    showPopup(msg, "okay.");
+    setTimeout(() => {
+      showPopup(msg, "Okay");
+    }, 500); // same delay for consistency
     setTimeout(() => {
       firstCard.classList.remove("flipped");
       secondCard.classList.remove("flipped");
-    }, 100);
+    }, 1000); // give user time to see cards before they flip back
   } else {
     setTimeout(() => {
       firstCard.classList.remove("flipped");
