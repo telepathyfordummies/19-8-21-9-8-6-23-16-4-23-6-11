@@ -129,14 +129,50 @@ body {
   cursor: pointer;
   font-weight: bold;
 }
+
+  #rules-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+  
 </style>
 </head>
 
 <body>
 
 <div id="top-bar">
-  <button onclick="exitGame()">Exit</button>
+  <div>
+    <button onclick="exitGame()">Exit</button>
+    <button onclick="showRules()">Rules</button>
+  </div>
   <span id="timer">00:00</span>
+</div>
+
+  <div id="rules-popup">
+  <div class="popup-box">
+    <div class="popup-header">
+      <span>Game Rules</span>
+      <button class="popup-close" onclick="closeRules()">×</button>
+    </div>
+    <p>
+      1. Click a card to flip it.<br>
+      2. Flip a second card to try to make a match.<br>
+      3. Some cards have no matches.<br>
+      4. If the match is correct, you will be told.<br>
+      5. There are fourteen matches total.
+    </p>
+    <div class="popup-buttons">
+      <button onclick="closeRules()">Close</button>
+    </div>
+  </div>
 </div>
 
 <div id="game-board"></div>
@@ -159,6 +195,17 @@ body {
 <audio id="bg-music" src="background.mp3" loop autoplay></audio>
 
 <script>
+
+  // ======RULESSSS===== 
+
+  function showRules() {
+  document.getElementById('rules-popup').style.display = 'flex';
+}
+
+function closeRules() {
+  document.getElementById('rules-popup').style.display = 'none';
+}
+  
 // ====== CONFIG ======
 const cardsData = [
   { type: "stan", img: "stan.png" }, { type: "stan", img: "stan.png" },
