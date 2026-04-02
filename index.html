@@ -24,15 +24,16 @@ body {
 
 #game-board {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 100px);
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   gap: 12px;
   justify-content: center;
-  margin-top: 40px;
+  margin: 40px auto;
+  max-width: 650px; /* keeps cards centered on last row */
 }
 
 .card {
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  aspect-ratio: 1; /* ensures cards are square */
   perspective: 1000px;
   cursor: pointer;
 }
@@ -219,7 +220,10 @@ function flipCard(card) {
   if (lock || card.classList.contains("flipped")) return;
   if (firstCard === card) return;
 
-  document.getElementById('flip-sound').play();
+  const flipSound = document.getElementById('flip-sound');
+  flipSound.currentTime = 0;  // reset to start
+  flipSound.play();            // play sound
+
   card.classList.add("flipped");
 
   if (!firstCard) {
