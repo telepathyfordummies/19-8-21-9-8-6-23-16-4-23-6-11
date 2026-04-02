@@ -193,27 +193,9 @@ body {
 </div>
   
 <audio id="flip-sound" src="flip.mp3"></audio>
-<audio id="bg-music" src="background.mp3" loop></audio>
+<audio id="bg-music" src="background.mp3" loop autoplay></audio>
 
 <script>
-
-  let bgStarted = false; // track if music has started
-const bgMusic = document.getElementById('bg-music');
-bgMusic.volume = 0.2; // lower volume
-
-// Start music on first user click anywhere
-document.addEventListener('click', () => {
-  if (!bgStarted) {
-    bgMusic.play().catch(err => {
-      console.log("Background music play blocked:", err);
-    });
-    bgStarted = true;
-  }
-}, { once: true }); // only triggers once
-
-  // ======BACKGROUND MUSIC. LEAVING VOLUME NOTES HERE BC U ALWAYS FORGET =====
-  const bgMusic = document.getElementById('bg-music');
-bgMusic.volume = 0.2; // 0.0 = silent, 1.0 = full volume
 
   // ======RULESSSS===== 
 
@@ -267,7 +249,7 @@ const matchResults = {
   "stan-marj": { message: "You have selected players Stan and Marj. Do you wish to proceed?", link: "https://archiveofourown.org/works/82304731" },
   "marj-stan": { message: "You have selected players Marj and Stan. Do you wish to proceed?", link: "https://archiveofourown.org/works/82304731" },
   "leo-stan": { message: "You have selected players Leo and Stan. Do you wish to proceed?", link: "https://archiveofourown.org/works/82305226" },
-  "stan-leo": { message: "You have selected players Stan and Leo. Do you wish to proceed?", link: "https://archiveofourown.org/works/82305226" },
+  "stan-leo": { message: "You have selected players Stan and Kenny. Do you wish to proceed?", link: "https://archiveofourown.org/works/82305226" },
   "wendy-tammy": { message: "You have selected players Wendy and Tammy. Do you wish to proceed?", link: "https://archiveofourown.org/works/82305491" },
   "tammy-wendy": { message: "You have selected players Tammy and Wendy. Do you wish to proceed?", link: "https://archiveofourown.org/works/82305491" },
   "stan-kyle": { message: "You have selected players Stan and Kyle. Do you wish to proceed?", link: "https://archiveofourown.org/works/82304986" },
@@ -310,44 +292,23 @@ let lock = false;
 let currentLink = "";
 let popupMode = "match";
 
-let bgStarted = false; // ensures music plays only once
-
 function flipCard(card) {
   if (lock || card.classList.contains("flipped")) return;
   if (firstCard === card) return;
 
-  // ===== Play background music on first interaction =====
-  if (!bgStarted) {
-    const bgMusic = document.getElementById('bg-music');
-    bgMusic.volume = 0.2; // lower volume
-    bgMusic.play().catch(() => {
-      console.log("User interaction required for autoplay");
-    });
-    bgStarted = true;
-  }
-
-  // ===== Play flip sound =====
   const flipSound = document.getElementById('flip-sound');
   flipSound.currentTime = 0;  // reset to start
-  flipSound.play();
+  flipSound.play();            // play sound
 
-  // ===== Flip the card =====
   card.classList.add("flipped");
 
   if (!firstCard) {
     firstCard = card;
   } else {
     secondCard = card;
-    lock = true; // prevent clicking other cards during delay
-
-    // ===== Add a short delay before checking match =====
-    setTimeout(() => {
-      checkMatch();
-    }, 400); // 400ms delay so player sees the second card flip
+    checkMatch();
   }
 }
-
-  
 
 function checkMatch() {
   lock = true;
