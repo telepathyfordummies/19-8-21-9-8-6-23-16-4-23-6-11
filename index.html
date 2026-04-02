@@ -147,11 +147,13 @@ body {
       <button class="popup-close" onclick="closePopup()">×</button>
     </div>
     <p id="popup-text"></p>
-    <button id="go-button" onclick="goToLink()">Go</button>
-    <button id="back-button" onclick="closePopup()">Back</button>
+    <div class="popup-buttons">
+      <button id="go-button" onclick="goToLink()">Go</button>
+      <button id="back-button" onclick="closePopup()">Back</button>
+    </div>
   </div>
 </div>
-
+  
 <audio id="flip-sound" src="flip.mp3"></audio>
 <audio id="bg-music" src="background.mp3" loop autoplay></audio>
 
