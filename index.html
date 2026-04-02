@@ -282,12 +282,15 @@ function showPopup(msg, button1Text, button2Text) {
   goBtn.innerText = button1Text || "go!";
   backBtn.innerText = button2Text || "back";
 
-  if (popupMode === "nomatch") {
+ if (popupMode === "nomatch") {
     goBtn.style.display = 'none';
     backBtn.style.display = 'inline-block';
+    backBtn.innerText = button1Text || "okay."; // <-- use button1Text here
   } else {
     goBtn.style.display = 'inline-block';
     backBtn.style.display = 'inline-block';
+    goBtn.innerText = button1Text || "go!";
+    backBtn.innerText = button2Text || "back";
   }
 
   document.getElementById("popup").style.display = "flex";
