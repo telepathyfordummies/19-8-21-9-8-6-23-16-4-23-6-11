@@ -296,23 +296,44 @@ let lock = false;
 let currentLink = "";
 let popupMode = "match";
 
+let bgStarted = false; // ensures music plays only once
+
 function flipCard(card) {
   if (lock || card.classList.contains("flipped")) return;
   if (firstCard === card) return;
 
+  // ===== Play background music on first interaction =====
+  if (!bgStarted) {
+    const bgMusic = document.getElementById('bg-music');
+    bgMusic.volume = 0.2; // lower volume
+    bgMusic.play().catch(() => {
+      console.log("User interaction required for autoplay");
+    });
+    bgStarted = true;
+  }
+
+  // ===== Play flip sound =====
   const flipSound = document.getElementById('flip-sound');
   flipSound.currentTime = 0;  // reset to start
-  flipSound.play();            // play sound
+  flipSound.play();
 
+  // ===== Flip the card =====
   card.classList.add("flipped");
 
   if (!firstCard) {
     firstCard = card;
   } else {
     secondCard = card;
-    checkMatch();
+    lock = true; // prevent clicking other cards during delay
+
+    // ===== Add a short delay before checking match =====
+    setTimeout(() => {
+      checkMatch();
+    }, 400); // 400ms delay so player sees the second card flip
   }
 }
+
+  
 
 function checkMatch() {
   lock = true;
