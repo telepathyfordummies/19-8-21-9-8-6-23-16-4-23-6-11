@@ -8,16 +8,26 @@
 <style>
 body {
   font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  margin-top: 40px;
+  margin: 0;
   background: #f0f0f0;
+}
+
+#top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #c0c0c0;
+  padding: 10px 20px;
+  border-bottom: 2px solid #808080;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 #game-board {
   display: grid;
-  grid-template-columns: repeat(6, 100px);
+  grid-template-columns: repeat(auto-fit, 100px);
   gap: 12px;
+  justify-content: center;
+  margin-top: 40px;
 }
 
 .card {
@@ -74,29 +84,50 @@ body {
 }
 
 .popup-box {
-  background: white;
+  background: #c0c0c0;
+  border: 2px solid #000;
+  width: 300px;
   padding: 20px;
   text-align: center;
-  border-radius: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 4px 4px #808080;
 }
 
-button {
-  margin: 10px;
-  padding: 8px 12px;
+.popup-box p {
+  margin-bottom: 20px;
+}
+
+.popup-box button {
+  margin: 5px;
+  padding: 5px 12px;
+  background: #e0e0e0;
+  border: 2px solid #000;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 2px 2px #808080;
 }
 </style>
 </head>
 
 <body>
 
+<div id="top-bar">
+  <button onclick="exitGame()">Exit</button>
+  <span id="timer">00:00</span>
+</div>
+
 <div id="game-board"></div>
 
 <div id="popup">
   <div class="popup-box">
     <p id="popup-text"></p>
-    <button id="popup-button" onclick="popupAction()">Go</button>
+    <button id="go-button" onclick="goToLink()">Go</button>
+    <button id="back-button" onclick="closePopup()">Back</button>
   </div>
 </div>
+
+<audio id="flip-sound" src="flip.mp3"></audio>
+<audio id="bg-music" src="background.mp3" loop autoplay></audio>
 
 <script>
 // ====== CONFIG ======
@@ -154,6 +185,7 @@ const noMatchPopups = {
   "michael": "too close"
 };
 
+
 // ====== SETUP ======
 const board = document.getElementById("game-board");
 cardsData.sort(() => Math.random() - 0.5);
@@ -181,12 +213,13 @@ let firstCard = null;
 let secondCard = null;
 let lock = false;
 let currentLink = "";
-let popupMode = "match"; // or "nomatch"
+let popupMode = "match";
 
 function flipCard(card) {
   if (lock || card.classList.contains("flipped")) return;
   if (firstCard === card) return;
 
+  document.getElementById('flip-sound').play();
   card.classList.add("flipped");
 
   if (!firstCard) {
@@ -205,10 +238,9 @@ function checkMatch() {
   const key = `${t1}-${t2}`;
 
   if (matchResults[key]) {
-    const result = matchResults[key];
-    currentLink = result.link;
+    currentLink = matchResults[key].link;
     popupMode = "match";
-    showPopup(result.message, "Go");
+    showPopup(matchResults[key].message, "Go", "Back");
   } else if (noMatchPopups[t1] || noMatchPopups[t2]) {
     let msg = noMatchPopups[t1] || noMatchPopups[t2];
     popupMode = "nomatch";
@@ -233,10 +265,22 @@ function reset() {
 }
 
 // ====== POPUP ======
-function showPopup(msg, buttonText) {
+function showPopup(msg, button1Text, button2Text) {
   document.getElementById("popup-text").innerText = msg;
-  const btn = document.getElementById("popup-button");
-  btn.innerText = buttonText;
+  const goBtn = document.getElementById("go-button");
+  const backBtn = document.getElementById("back-button");
+
+  goBtn.innerText = button1Text || "Go";
+  backBtn.innerText = button2Text || "Back";
+
+  if (popupMode === "nomatch") {
+    goBtn.style.display = 'none';
+    backBtn.style.display = 'inline-block';
+  } else {
+    goBtn.style.display = 'inline-block';
+    backBtn.style.display = 'inline-block';
+  }
+
   document.getElementById("popup").style.display = "flex";
 }
 
@@ -245,13 +289,29 @@ function closePopup() {
   reset();
 }
 
-function popupAction() {
+function goToLink() {
   if (popupMode === "match") {
     window.location.href = currentLink;
   } else {
     closePopup();
   }
 }
+
+function exitGame() {
+  if (confirm('Exit game?')) {
+    window.location.href = '/';
+  }
+}
+
+// ====== TIMER ======
+let seconds = 0;
+let minutes = 0;
+setInterval(() => {
+  seconds++;
+  if (seconds >= 60) { seconds = 0; minutes++; }
+  document.getElementById('timer').innerText = 
+    `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+}, 1000);
 </script>
 
 </body>
